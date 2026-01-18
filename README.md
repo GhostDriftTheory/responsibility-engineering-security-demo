@@ -6,7 +6,7 @@
 
 This demo is part of the **AI Safety & AI Accountability Project**, demonstrating how Responsibility Engineering applies **ADIC-based Integrity Verification** to shield critical systems from malicious or unverified inputs by securing the mathematical boundary of requests.
 
-[**🌐 View Security OS Demo**](https://www.google.com/search?q=https://ghostdrifttheory.github.io/security-os-adic-demo/)
+[[**🌐 View Security OS Demo**]](https://ghostdrifttheory.github.io/responsibility-engineering-security-demo/)
 
 ## **📖 Overview**
 
@@ -58,7 +58,7 @@ Source: GhostDrift Mathematical Research Project
 Project: GhostDrift Security OS Tech Demo  
 Concept: Cybersecurity in Responsibility Engineering  
 Institution: GhostDrift Mathematical Research Institute (ゴーストドリフト数理研究所)  
-URL: https://ghostdrifttheory.github.io/security-os-adic-demo/
+URL: https://ghostdrifttheory.github.io/responsibility-engineering-security-demo/
 
 ## **🛡️ License & Patent Notice**
 
