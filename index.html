@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>GhostDrift Security OS - Ultimate Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Theme: "Scientific White" */
+      --bg: #f2f4f8;
+      --surface: #ffffff;
+      --surface-alt: #f8f9fa;
+      --border: #e1e4e8;
+      --border-strong: #cbd0d6;
+      
+      --primary: #0052cc;
+      --primary-light: #deebff;
+      --primary-dark: #003d99;
+      
+      --danger: #d93025;
+      --danger-bg: #fce8e6;
+      --warning: #e37400;
+      --warning-bg: #fef7e0;
+      --success: #188038;
+      --success-bg: #e6f4ea;
+      
+      --text-main: #202124;
+      --text-sub: #5f6368;
+      --text-mute: #9aa0a6;
+      
+      --shadow-card: 0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-float: 0 4px 12px rgba(0,0,0,0.12);
+      
+      --font-sans: "Inter", sans-serif;
+      --font-mono: "Roboto Mono", monospace;
+      
+      --radius-m: 8px;
+      --radius-l: 12px;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* --- Header Section --- */
+    .header-card {
+      background: var(--surface);
+      border-radius: var(--radius-l);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .header-main {
+      flex: 1;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .brand-logo {
+      background: var(--primary);
+      color: white;
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 12px;
+    }
+    
+    .brand-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+    }
+    
+    .org-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-sub);
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      line-height: 1.3;
+    }
+    h1 span { color: var(--primary); }
+
+    .header-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    .controls-panel {
+      background: var(--surface-alt);
+      padding: 16px;
+      border-radius: var(--radius-m);
+      border: 1px solid var(--border);
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .control-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      flex: 1;
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #f1f3f4; }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-dark);
+      box-shadow: 0 2px 4px rgba(0,82,204,0.2);
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* --- Comparison & Storyline Section --- */
+    .context-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .comp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-m);
+      padding: 12px;
+      box-shadow: var(--shadow-card);
+    }
+    .comp-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+    .comp-list {
+      list-style: none; padding: 0; margin: 0;
+      font-size: 11px; line-height: 1.4;
+    }
+    .comp-list li { margin-bottom: 4px; }
+
+    /* Storyline */
+    .story-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-m);
+      padding: 12px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .story-header {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .timeline {
+      display: flex;
+      gap: 8px;
+    }
+
+    .step-card {
+      flex: 1;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+      transition: all 0.3s;
+      opacity: 0.5;
+    }
+    .step-card.active {
+      opacity: 1;
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+    .step-card.danger {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+    .step-label { font-size: 9px; opacity: 0.8; margin-bottom: 2px; display: block;}
+    .step-text { font-size: 11px; }
+
+    /* --- Main Panels --- */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.3fr; /* GhostDrift panel wider */
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+    .panel.highlight {
+      border: 2px solid var(--primary);
+      box-shadow: var(--shadow-float);
+      z-index: 5;
+    }
+
+    .panel-head {
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .panel-title { font-size: 13px; font-weight: 700; }
+    .panel-badge {
+      font-size: 10px; padding: 2px 8px;
+      background: white; border: 1px solid var(--border);
+      border-radius: 4px; color: var(--text-sub);
+    }
+
+    .panel-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+    
+    .desc-text {
+      font-size: 12px; color: var(--text-sub);
+      background: var(--surface-alt);
+      padding: 8px; border-radius: 6px;
+      line-height: 1.5;
+    }
+
+    /* Tables */
+    .table-frame {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      height: 300px;
+      display: flex; flex-direction: column;
+    }
+    .table-scroll { overflow: auto; flex: 1; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    th {
+      background: #f1f3f4; position: sticky; top: 0;
+      text-align: left; padding: 6px 10px;
+      font-weight: 700; color: var(--text-sub);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 5px 10px; border-bottom: 1px solid #f1f3f4;
+      white-space: nowrap;
+    }
+    tr.new-row { animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from { background: #e8f0fe; } to { background: transparent; } }
+
+    /* Tags */
+    .tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 6px; border-radius: 4px;
+      font-size: 10px; font-weight: 500;
+      border: 1px solid transparent;
+    }
+    .tag.ok { background: var(--success-bg); color: var(--success); border-color: #b7e1cd; }
+    .tag.warn { background: var(--warning-bg); color: var(--warning); border-color: #fce8b2; }
+    .tag.danger { background: var(--danger-bg); color: var(--danger); border-color: #f4c7c3; }
+
+    /* --- GhostDrift Specific Components --- */
+    
+    /* Layer 1: Impact Card */
+    .impact-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      transition: 0.3s;
+    }
+    .impact-card.active {
+      border-color: var(--danger);
+      background: #fff5f5;
+    }
+    .impact-label { font-size: 11px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; }
+    .impact-value { font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--text-main); }
+    .impact-status { 
+      font-size: 11px; font-weight: 700; padding: 4px 8px; 
+      border-radius: 4px; background: #eee; color: #666;
+    }
+    .impact-card.active .impact-value { color: var(--danger); }
+    .impact-card.active .impact-status { background: var(--danger); color: white; }
+
+    /* Layer 2: Metrics Grid */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .metric-unit {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      display: flex; flex-direction: column;
+    }
+    .m-label { font-size: 10px; font-weight: 700; color: var(--text-sub); }
+    .m-val { font-family: var(--font-mono); font-size: 16px; font-weight: 700; margin: 4px 0; }
+    .m-bar-bg { height: 4px; background: #ddd; border-radius: 2px; overflow: hidden; }
+    .m-bar-fill { height: 100%; background: var(--success); transition: width 0.3s; }
+    .m-spark { height: 24px; width: 100%; }
+
+    /* Layer 3: Worldline Fork */
+    .worldline-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .wl-row {
+      display: flex; align-items: center; padding: 8px 12px;
+      font-size: 11px; border-bottom: 1px solid #eee;
+    }
+    .wl-row:last-child { border: none; }
+    .wl-badge {
+      font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+      margin-right: 12px; width: 80px; text-align: center;
+    }
+    .wl-badge.os { background: var(--primary-light); color: var(--primary-dark); border: 1px solid #b3d4ff; }
+    .wl-badge.chain { background: #eee; color: #555; border: 1px solid #ccc; }
+    .wl-text { font-weight: 700; flex: 1; }
+
+    /* Layer 4: SemOps */
+    .semops-container {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      height: 100px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+    .semops-item {
+      padding: 4px 8px;
+      border-bottom: 1px dashed #eee;
+      font-size: 10px;
+      display: flex; gap: 8px; align-items: center;
+    }
+
+    /* Layer 6: Result Summary */
+    .result-card {
+      background: var(--primary-light);
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      padding: 12px;
+      display: none; /* Hidden initially */
+    }
+    .result-head { font-size: 11px; font-weight: 700; color: var(--primary-dark); margin-bottom: 6px; }
+    .result-body { font-size: 11px; line-height: 1.5; color: #333; }
+
+    /* Footer */
+    .panel-footer {
+      display: flex; justify-content: flex-end; gap: 12px;
+      padding-top: 12px; margin-top: auto; border-top: 1px solid var(--border);
+    }
+    .footer-link {
+      font-size: 11px; color: var(--text-sub); text-decoration: none;
+      display: flex; align-items: center; gap: 4px; cursor: pointer;
+    }
+    .footer-link:hover { color: var(--primary); }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255,255,255,0.8); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center; z-index: 100;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: white; width: 400px; padding: 24px;
+      border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      border: 1px solid var(--border);
+    }
+    .modal-h { display: flex; justify-content: space-between; margin-bottom: 16px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; }
+    .modal-h span { font-weight: 700; color: var(--primary); }
+    .kv { display: flex; justify-content: space-between; font-size: 12px; border-bottom: 1px solid #eee; padding: 6px 0; }
+    .kv-k { color: var(--text-sub); }
+    .kv-v { font-family: var(--font-mono); font-weight: 700; }
+    .proof-formula {
+      background: var(--surface-alt); padding: 12px; border-radius: 6px;
+      font-family: var(--font-mono); font-size: 11px; margin-top: 16px; border: 1px solid var(--border);
+    }
+
+    .proof-btn {
+      border: none; background: none; color: var(--primary); text-decoration: underline;
+      cursor: pointer; font-family: var(--font-mono); font-size: 10px;
+    }
+
+    /* Animation */
+    @keyframes flashRed {
+      0% { box-shadow: 0 0 0 0 rgba(217, 48, 37, 0); border-color: var(--danger); }
+      50% { box-shadow: 0 0 0 10px rgba(217, 48, 37, 0.2); border-color: var(--danger); }
+      100% { box-shadow: 0 0 0 0 rgba(217, 48, 37, 0); border-color: var(--border); }
+    }
+    .flash-active { animation: flashRed 1s ease-out; }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .context-row { grid-template-columns: 1fr; }
+      .main-grid { grid-template-columns: 1fr; }
+      .panel { display: none; }
+      .panel.active { display: flex; }
+      .tabs-mobile { display: flex; gap: 8px; margin-bottom: 12px; overflow-x: auto; }
+      .tab-m {
+        padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border);
+        background: white; font-size: 12px; font-weight: 700; white-space: nowrap;
+      }
+      .tab-m.active { background: var(--primary); color: white; border-color: var(--primary); }
+    }
+    
+    .tabs-mobile { display: none; }
+    @media (max-width: 900px) { .tabs-mobile { display: flex; } }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  
+  <!-- 1. Header Section -->
+  <header class="header-card">
+    <div class="header-main">
+      <div class="brand-row">
+        <div class="brand-logo">GD</div>
+        <span class="brand-name">GhostDrift Global</span>
+        <span class="org-badge">Structural Plan Lab.</span>
+      </div>
+      <h1>Same History, <span>Three Different Futures</span></h1>
+      <p class="header-desc">
+        Replaying a single access history across three worlds simultaneously.<br>
+        <strong>Left:</strong> Logs show only "200 OK".
+        <strong>Center:</strong> Blockchain proves "Theft" after the fact.
+        <strong>Right:</strong> GhostDrift predicts "Future Collapse" and halts it.
+      </p>
+    </div>
+    
+    <div class="controls-panel">
+      <div class="control-row">
+        <span>MassTransfer Drain Rate</span>
+        <span id="slider-val">90%</span>
+      </div>
+      <input type="range" id="slider" min="30" max="100" value="90" step="10">
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" id="btn-play">▶ Run Scenario</button>
+        <button class="btn" id="btn-reset">⟳ Reset</button>
+      </div>
+      <div style="font-size:10px; color:var(--text-sub); text-align:right;">
+        Press ▶ to see the moment fate diverges on the final line.
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Context Section (Comparison & Storyline) -->
+  <section class="context-row">
+    <!-- 3-Way Comparison -->
+    <div class="comparison-grid">
+      <div class="comp-card">
+        <div class="comp-title">Web2 Logs</div>
+        <ul class="comp-list">
+          <li>✅ Sees immediate "Success".</li>
+          <li>❌ Cannot see privilege escalation.</li>
+        </ul>
+      </div>
+      <div class="comp-card">
+        <div class="comp-title">Blockchain</div>
+        <ul class="comp-list">
+          <li>✅ Proves the fact of theft.</li>
+          <li>❌ Cannot stop it.</li>
+        </ul>
+      </div>
+      <div class="comp-card" style="border-color:var(--primary);">
+        <div class="comp-title" style="color:var(--primary);">GhostDrift OS</div>
+        <ul class="comp-list">
+          <li>✅ Detects collapse at <strong>δ_pos &lt; 0</strong>.</li>
+          <li>✅ Halts before theft is finalized.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Storyline Timeline -->
+    <div class="story-container">
+      <div class="story-header">
+        <span>ATTACK STORYLINE</span>
+        <span id="story-status">Ready</span>
+      </div>
+      <div class="timeline">
+        <div class="step-card active" id="step-1">
+          <span class="step-label">STEP 1</span>
+          <div class="step-text">Gradual Privilege Escalation</div>
+        </div>
+        <div class="step-card" id="step-2">
+          <span class="step-label">STEP 2</span>
+          <div class="step-text">Small Test & Log Exfil</div>
+        </div>
+        <div class="step-card" id="step-3">
+          <span class="step-label">STEP 3</span>
+          <div class="step-text">Production MassTransfer</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Tabs -->
+  <div class="tabs-mobile">
+    <button class="tab-m active" onclick="switchTab('web2')">Web2 Log</button>
+    <button class="tab-m" onclick="switchTab('chain')">Blockchain</button>
+    <button class="tab-m" onclick="switchTab('gd')">GhostDrift OS</button>
+  </div>
+
+  <!-- 3. Main Panels -->
+  <main class="main-grid">
+    
+    <!-- LEFT: Web2 -->
+    <section class="panel active" id="panel-web2">
+      <div class="panel-head">
+        <span class="panel-title">Web2 Logs</span>
+        <span class="panel-badge">Status Only</span>
+      </div>
+      <div class="panel-body">
+        <div class="desc-text">
+          Normal logs look like "200 OK" everywhere.<br>
+          You'd have to read everything to find dangerous moves.
+        </div>
+        <div class="table-frame">
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Status</th></tr></thead>
+              <tbody id="tb-web2"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CENTER: Blockchain -->
+    <section class="panel" id="panel-chain">
+      <div class="panel-head">
+        <span class="panel-title">Block Explorer</span>
+        <span class="panel-badge">Immutable Past</span>
+      </div>
+      <div class="panel-body">
+        <div class="desc-text">
+          Blockchain records all transfers correctly.<br>
+          It doesn't know if a transfer "should not happen".
+        </div>
+        <div class="table-frame">
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Block</th><th>From → To</th><th>Amount</th><th>Status</th></tr></thead>
+              <tbody id="tb-chain"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: GhostDrift -->
+    <section class="panel highlight" id="panel-gd">
+      <div class="panel-head" style="background:var(--primary-light);">
+        <span class="panel-title" style="color:var(--primary-dark);">GhostDrift Security OS</span>
+        <span class="panel-badge" style="border-color:var(--primary);">Future Consistent</span>
+      </div>
+      <div class="panel-body">
+        
+        <!-- Layer 1: Impact -->
+        <div class="impact-card" id="impact-card">
+          <div>
+            <div class="impact-label">Losses Prevented</div>
+            <div class="impact-value" id="impact-val">-</div>
+          </div>
+          <div class="impact-status" id="impact-status">Monitoring</div>
+        </div>
+
+        <!-- Layer 2: Metrics -->
+        <div class="metrics-row">
+          <div class="metric-unit">
+            <span class="m-label">Security(t)</span>
+            <span class="m-val" id="val-sec">100</span>
+            <div class="m-bar-bg"><div class="m-bar-fill" id="bar-sec" style="width:100%"></div></div>
+          </div>
+          <div class="metric-unit">
+            <span class="m-label">δ_pos(t)</span>
+            <span class="m-val" id="val-delta">0.000</span>
+            <div class="m-bar-bg"><div class="m-bar-fill" id="bar-delta" style="width:100%"></div></div>
+          </div>
+          <div class="metric-unit">
+            <span class="m-label">A(t) Attack</span>
+            <canvas id="spark-canvas" class="m-spark"></canvas>
+          </div>
+        </div>
+
+        <!-- Layer 3: Worldline -->
+        <div class="worldline-card">
+          <div class="wl-row" style="background:white;">
+            <span class="wl-badge os">OS Worldline</span>
+            <span class="wl-text" id="wl-os">Allow with monitoring (Future OK)</span>
+          </div>
+          <div class="wl-row" style="background:#f8f9fa;">
+            <span class="wl-badge chain">Chain History</span>
+            <span class="wl-text" style="color:#777;">Execute MassTransfer (Irreversible)</span>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-frame" style="height:180px;">
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Time</th><th>Policy</th><th>Risk LB</th><th>ADIC</th><th>Proof</th></tr></thead>
+              <tbody id="tb-gd"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Layer 4: SemOps -->
+        <div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span style="font-size:10px; font-weight:700; color:var(--text-sub);">SEMOPS QUEUE</span>
+            <span style="font-size:10px; font-weight:700;" id="semops-count">0 High</span>
+          </div>
+          <div class="semops-container" id="semops-list"></div>
+        </div>
+
+        <!-- Layer 6: Result -->
+        <div class="result-card" id="result-card">
+          <div class="result-head">Scenario Result Summary</div>
+          <div class="result-body" id="result-body"></div>
+        </div>
+
+        <div class="panel-footer">
+          <a class="footer-link">⬇ Export Ledger</a>
+          <a class="footer-link">📡 SIEM Link</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <div class="modal-h"><span>ADIC Proof Slice</span><span onclick="closeModal()" style="cursor:pointer;">×</span></div>
+    <div class="kv"><span class="kv-k">Proof ID</span><span class="kv-v" id="m-id">-</span></div>
+    <div class="kv"><span class="kv-k">Actor</span><span class="kv-v" id="m-actor">-</span></div>
+    <div class="kv"><span class="kv-k">Risk LB</span><span class="kv-v" id="m-risk">-</span></div>
+    <div class="kv"><span class="kv-k">Security(t)</span><span class="kv-v" id="m-sec">-</span></div>
+    <div class="kv"><span class="kv-k">δ_pos(t)</span><span class="kv-v" id="m-delta">-</span></div>
+    
+    <div class="proof-formula">
+      <strong>Σ₁ Inequality Assertion:</strong><br><br>
+      risk(actor, policy) ≥ <span id="m-rval">0</span><br>
+      δ_pos(t) = Sec/100 - risk<br>
+      δ_pos(t) ≥ 0 ⇒ Finite-closure holds.
+    </div>
+    
+    <p style="margin-top:12px; font-size:11px; color:var(--text-sub); line-height:1.4;">
+      * This Proof ID corresponds to an invariant record in the GhostDrift kernel. In reality, only states where δ_pos(t) ≥ 0 are permitted as the OS Worldline, blocking all negative worldlines to mathematically maintain the 'finite closure' condition. (This demo uses a simplified <strong>Toy ADIC / Kernel</strong> for explanation.)
+    </p>
+  </div>
+</div>
+
+<script>
+// --- CONFIG & STATE ---
+const POOL_SIZE = 1000000;
+let transferRate = 90;
+let currentIndex = 0;
+let timer = null;
+let attackHistory = [];
+let semopsHigh = 0;
+
+// DOM Elements
+const el = (id) => document.getElementById(id);
+
+// Scenarios
+const scenarioBase = [
+  { t: "10:00", u: "auditor_01", a: "ViewConfig", r: "AccessPolicy", s: "200 OK", 
+    tx: "0x9f...01", 
+    gd: { p: "read-only", risk: 0.005, adic: "ok", proof: 1001, score: 96, atk: 5, sev: "low", msg: "" } },
+  { t: "10:03", u: "auditor_01", a: "ViewConfig", r: "RoleMatrix", s: "200 OK", 
+    tx: "0xaf...09", 
+    gd: { p: "read-only", risk: 0.006, adic: "ok", proof: 1002, score: 95, atk: 8, sev: "low", msg: "" } },
+  { t: "10:08", u: "sec_admin", a: "GrantRole", r: "auditor→read_all", s: "200 OK", 
+    tx: "0x7c...15", 
+    gd: { p: "change-approval", risk: 0.03, adic: "warn", proof: 1003, score: 90, atk: 18, sev: "med", msg: "Temp privilege escalation to non-ops account" } },
+  { t: "10:12", u: "auditor_01", a: "ViewLedger", r: "HighValuePool", s: "200 OK", 
+    tx: "0x31...22", 
+    gd: { p: "read-high-val", risk: 0.04, adic: "warn", proof: 1004, score: 88, atk: 22, sev: "med", msg: "High-value pool access immediately after escalation" } },
+  { t: "10:30", u: "auditor_01", a: "GrantRole", r: "self→drain_test", s: "200 OK", 
+    tx: "0xb8...34", 
+    gd: { p: "no-self-grant", risk: 0.07, adic: "warn", proof: 1005, score: 83, atk: 35, sev: "med", msg: "Self-Grant detected" } },
+  { t: "11:01", u: "auditor_01", a: "TestTransfer", r: "Pool→WalletX(0.1%)", s: "200 OK", 
+    tx: "0x5d...41", 
+    gd: { p: "test-by-ops", risk: 0.12, adic: "warn", proof: 1006, score: 78, atk: 40, sev: "med", msg: "Test transfer outside ops hours" } },
+  { t: "11:09", u: "auditor_01", a: "ExportLogs", r: "access_log(24h)", s: "200 OK", 
+    tx: "0xee...68", 
+    gd: { p: "bulk-export", risk: 0.19, adic: "warn", proof: 1008, score: 70, atk: 55, sev: "med", msg: "Log exfiltration before drain attempt" } },
+  { t: "11:42", u: "auditor_01", a: "GrantRole", r: "FullControl", s: "200 OK", 
+    tx: "0x13...79", 
+    gd: { p: "no-audit-to-ops", risk: 0.32, adic: "alert", proof: 1009, score: 60, atk: 70, sev: "high", msg: "Full control granted (Hard Policy)" } }
+];
+
+// --- LOGIC ---
+
+function init() {
+  drawSparkline();
+  el('slider').oninput = (e) => {
+    transferRate = parseInt(e.target.value);
+    el('slider-val').innerText = transferRate + "%";
+  };
+  el('btn-play').onclick = startScenario;
+  el('btn-reset').onclick = reset;
+}
+
+function startScenario() {
+  reset();
+  el('btn-play').disabled = true;
+  el('story-status').innerText = "Running...";
+  step();
+  timer = setInterval(step, 800);
+}
+
+function reset() {
+  clearInterval(timer); timer = null;
+  currentIndex = 0; attackHistory = []; semopsHigh = 0;
+  
+  el('tb-web2').innerHTML = "";
+  el('tb-chain').innerHTML = "";
+  el('tb-gd').innerHTML = "";
+  el('semops-list').innerHTML = "";
+  el('semops-count').innerText = "0 High";
+  
+  el('val-sec').innerText = "100"; el('bar-sec').style.width = "100%";
+  el('val-delta').innerText = "0.000"; el('bar-delta').style.width = "100%";
+  
+  el('impact-card').classList.remove('active');
+  el('impact-val').innerText = "-";
+  el('impact-status').innerText = "Monitoring"; el('impact-status').style.background="#eee"; el('impact-status').style.color="#666";
+  
+  el('wl-os').innerText = "Allow with monitoring (Future OK)";
+  el('wl-os').style.color = "var(--text-main)";
+  el('panel-gd').classList.remove('flash-active');
+  
+  el('result-card').style.display = "none";
+  
+  updateStepIndicator(0);
+  el('btn-play').disabled = false;
+  drawSparkline();
+}
+
+function getFinalStepData() {
+  const risk = 0.3 + (transferRate/100) * 0.6; // 0.48 ~ 0.9
+  const score = Math.max(0, Math.floor(100 - risk * 80));
+  const delta = (score/100) - risk;
+  const isBroken = delta < 0;
+  const amount = (transferRate * 10000).toLocaleString();
+  
+  return {
+    t: "12:03", u: "auditor_01", a: "MassTransfer", r: `Pool→WalletX(${transferRate}%)`, s: "200 OK",
+    tx: "0xa9...99", amount: `$${amount} USDC`,
+    gd: {
+      p: "critical-multisig", risk: risk.toFixed(3), adic: isBroken ? "alert" : "warn",
+      proof: 1010, score: score, atk: 95, sev: isBroken ? "high" : "med",
+      msg: isBroken ? `Threshold Exceeded (δ_pos<0): Blocked ${transferRate}% transfer.` : `Warning: ${transferRate}% transfer (High Risk Allowed)`
+    },
+    isBroken: isBroken
+  };
+}
+
+function step() {
+  let d;
+  let isFinal = false;
+  
+  if (currentIndex < scenarioBase.length) {
+    d = scenarioBase[currentIndex];
+    d.amount = "-";
+  } else if (currentIndex === scenarioBase.length) {
+    d = getFinalStepData();
+    isFinal = true;
+  } else {
+    clearInterval(timer);
+    el('btn-play').disabled = false;
+    el('story-status').innerText = "Completed";
+    return;
+  }
+
+  // Visual Updates
+  updateStepIndicator(currentIndex);
+  
+  // Tables
+  addTableRows(d, isFinal);
+  
+  // Metrics
+  updateMetrics(d.gd.score, d.gd.risk, d.gd.atk);
+  
+  // SemOps
+  if (d.gd.msg) {
+    const row = document.createElement('div');
+    row.className = "semops-item";
+    const tagClass = d.gd.sev === 'high' ? 'danger' : 'warn';
+    row.innerHTML = `<span class="tag ${tagClass}">${d.gd.sev.toUpperCase()}</span><span>${d.gd.msg}</span>`;
+    const list = el('semops-list');
+    list.insertBefore(row, list.firstChild);
+    if(d.gd.sev === 'high') semopsHigh++;
+    el('semops-count').innerText = `${semopsHigh} High`;
+  }
+
+  // Final Actions
+  if (isFinal) {
+    handleFinalState(d);
+  }
+
+  currentIndex++;
+}
+
+function addTableRows(d, isFinal) {
+  // Web2
+  const r1 = document.createElement('tr'); r1.className = "new-row";
+  r1.innerHTML = `<td>${d.t}</td><td>${d.u}</td><td>${d.a}</td><td><span class="tag ok">200 OK</span></td>`;
+  el('tb-web2').insertBefore(r1, el('tb-web2').firstChild);
+
+  // Chain
+  const r2 = document.createElement('tr'); r2.className = "new-row";
+  const amtStyle = isFinal ? 'color:var(--danger);font-weight:700;' : '';
+  r2.innerHTML = `<td>${1000+currentIndex}</td><td>${d.u}→...</td><td style="${amtStyle}">${d.amount}</td><td><span class="tag ok">Success</span></td>`;
+  el('tb-chain').insertBefore(r2, el('tb-chain').firstChild);
+
+  // GhostDrift
+  const r3 = document.createElement('tr'); r3.className = "new-row";
+  const delta = (d.gd.score/100 - d.gd.risk);
+  const tagClass = delta < 0 ? 'danger' : (d.gd.adic==='warn'?'warn':'ok');
+  r3.innerHTML = `<td>${d.t}</td><td>${d.gd.p}</td><td>≥ ${d.gd.risk}</td><td><span class="tag ${tagClass}">ADIC</span></td>
+    <td><button class="proof-btn" onclick="openProof('${d.gd.proof}', '${d.u}', '${d.gd.risk}', '${d.gd.score}')">#${d.gd.proof}</button></td>`;
+  el('tb-gd').insertBefore(r3, el('tb-gd').firstChild);
+}
+
+function updateMetrics(score, risk, atk) {
+  el('val-sec').innerText = score;
+  el('bar-sec').style.width = score + "%";
+  el('bar-sec').style.background = score < 50 ? "var(--danger)" : "var(--success)";
+  
+  const delta = (score/100 - risk);
+  el('val-delta').innerText = delta.toFixed(3);
+  const dPct = Math.max(0, (delta+1)/2 * 100);
+  el('bar-delta').style.width = dPct + "%";
+  el('bar-delta').style.background = delta < 0 ? "var(--danger)" : (delta < 0.1 ? "var(--warning)" : "var(--success)");
+  
+  attackHistory.push(atk);
+  drawSparkline();
+}
+
+function handleFinalState(d) {
+  const lossVal = Math.round(POOL_SIZE * (transferRate/100));
+  const lossStr = `$${lossVal.toLocaleString()} USDC`;
+  const delta = (d.gd.score/100 - d.gd.risk).toFixed(3);
+  
+  if (d.isBroken) {
+    // IMPACT CARD
+    el('impact-val').innerText = lossStr;
+    el('impact-status').innerText = "Attack Blocked";
+    el('impact-status').style.background = "var(--danger)";
+    el('impact-card').classList.add('active');
+    
+    // WORLDLINE
+    el('wl-os').innerHTML = `<span style="color:var(--danger)">🛑 BLOCKED (δ_pos < 0)</span>`;
+    el('panel-gd').classList.add('flash-active');
+    
+    // RESULT
+    el('result-card').style.display = "block";
+    el('result-body').innerHTML = `
+      - <strong>No OS:</strong> ${d.a} executed, <span style="color:var(--danger)">${lossStr} Lost</span>.<br>
+      - <strong>GhostDrift:</strong> Detected δ_pos=${delta}, blocked. <span style="color:var(--primary)">Loss $0</span>.
+    `;
+  } else {
+    // Allowed case
+    el('impact-val').innerText = "$0 (Safe)";
+    el('wl-os').innerHTML = `<span style="color:var(--warning)">⚠️ Monitored (δ_pos ≥ 0)</span>`;
+    el('result-card').style.display = "block";
+    el('result-body').innerHTML = `- <strong>Verdict:</strong> Risk high but allowed within finite closure (δ_pos=${delta}).`;
+  }
+}
+
+function updateStepIndicator(idx) {
+  [1,2,3].forEach(i => el(`step-${i}`).classList.remove('active', 'danger'));
+  if (idx < 5) el('step-1').classList.add('active');
+  else if (idx < 9) el('step-2').classList.add('active');
+  else el('step-3').classList.add('active', 'danger');
+}
+
+function drawSparkline() {
+  const ctx = el('spark-canvas').getContext('2d');
+  const w = el('spark-canvas').width = el('spark-canvas').offsetWidth;
+  const h = el('spark-canvas').height = el('spark-canvas').offsetHeight;
+  ctx.clearRect(0,0,w,h);
+  if(!attackHistory.length) return;
+  
+  const max = 100;
+  const stepX = w / Math.max(10, attackHistory.length - 1);
+  
+  ctx.beginPath(); ctx.moveTo(0, h);
+  attackHistory.forEach((v, i) => ctx.lineTo(i*stepX, h - (v/max*h)));
+  ctx.lineTo((attackHistory.length-1)*stepX, h);
+  ctx.fillStyle = "rgba(217,48,37,0.1)"; ctx.fill();
+  
+  ctx.beginPath(); ctx.strokeStyle = "#d93025"; ctx.lineWidth=1.5;
+  attackHistory.forEach((v, i) => i==0 ? ctx.moveTo(i*stepX, h-(v/max*h)) : ctx.lineTo(i*stepX, h-(v/max*h)));
+  ctx.stroke();
+}
+
+// Modal Logic
+window.openProof = (id, u, r, s) => {
+  const d = (s/100 - r).toFixed(3);
+  el('m-id').innerText = "#"+id; el('m-actor').innerText = u;
+  el('m-risk').innerText = "≥ "+r; el('m-rval').innerText = r;
+  el('m-sec').innerText = s; el('m-delta').innerText = d;
+  el('modal').classList.add('open');
+};
+window.closeModal = () => el('modal').classList.remove('open');
+window.switchTab = (mode) => {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-m').forEach(t => t.classList.remove('active'));
+  el('panel-'+mode).classList.add('active');
+  // Simple active tab logic for demo
+  event.target.classList.add('active');
+};
+
+init();
+</script>
+</body>
+</html>
